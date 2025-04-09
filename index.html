@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stationery Bill Calculator & Admin Panel</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="preloader-logo">
+      <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+        <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+        <path d="M2 2l7.586 7.586"></path>
+        <circle cx="11" cy="11" r="2"></circle>
+        <line x1="3" y1="22" x2="21" y2="22" stroke-width="3"></line>
+      </svg>
+    </div>
+    <div class="preloader-text">Loading SBC</div>
+    <div class="progress-bar">
+      <div class="progress"></div>
+    </div>
+  </div>
+
+  <!-- Success Messages -->
+  <div id="welcomeMessage" class="success-message welcome-message" style="display: none;">
+    Welcome to Stationery Bill Calculator!
+  </div>
+  <div id="billSuccessMessage" class="success-message bill-success-message" style="display: none;">
+    Bill generated successfully!
+  </div>
+  <div id="registerSuccessMessage" class="success-message register-success-message" style="display: none;">
+    Registration successful! You can now log in.
+  </div>
+
+  <!-- Welcome Page -->
+  <div id="welcomePage" class="container animate__animated animate__fadeIn" style="display: none;">
+    <div class="logo-container">
+      <div class="logo">
+        <div class="logo-inner">
+          <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+            <path d="M2 2l7.586 7.586"></path>
+            <circle cx="11" cy="11" r="2"></circle>
+            <line x1="3" y1="22" x2="21" y2="22" stroke-width="3"></line>
+          </svg>
+        </div>
+      </div>
+      <div class="logo-text">SBC</div>
+    </div>
+    <h1 class="animate__animated animate__fadeInDown">Welcome to Stationery Bill Calculator</h1>
+    <p class="animate__animated animate__fadeIn">Manage your stationery purchases with ease</p>
+    <div class="button-group">
+      <button onclick="showRegistration()" class="animate__animated animate__fadeInLeft ripple">First-time User</button>
+      <button onclick="showLogin()" class="animate__animated animate__fadeInRight ripple">Existing User</button>
+      <button onclick="showAdminRegistration()" class="animate__animated animate__fadeInLeft ripple">Admin Registration</button>
+      <button onclick="showAdminLogin()" class="animate__animated animate__fadeInRight ripple">Admin Login</button>
+    </div>
+  </div>
+
+  <!-- User Registration Page -->
+  <div id="registrationPage" class="container" style="display: none;">
+    <div class="logo-container">
+      <div class="logo">
+        <div class="logo-inner">
+          <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+            <path d="M2 2l7.586 7.586"></path>
+            <circle cx="11" cy="11" r="2"></circle>
+            <line x1="3" y1="22" x2="21" y2="22" stroke-width="3"></line>
+          </svg>
+        </div>
+      </div>
+      <div class="logo-text">SBC</div>
+    </div>
+    <h1 class="animate__animated animate__fadeInDown">Register</h1>
+    <input type="text" id="regUsername" placeholder="Create Username" required class="animate__animated animate__fadeIn">
+    <input type="password" id="regPassword" placeholder="Create Password (min 6 characters)" required class="animate__animated animate__fadeIn">
+    <i class="password-toggle-icon" onclick="togglePassword('regPassword')">👁️</i>
+    <div id="regError" class="error"></div>
+    <div class="button-group">
+      <button onclick="register()" class="animate__animated animate__fadeInUp ripple">Register</button>
+      <button onclick="showWelcome()" class="animate__animated animate__fadeInUp ripple">Back</button>
+    </div>
+  </div>
+
+  <!-- User Login Page -->
+  <div id="loginPage" class="container" style="display: none;">
+    <div class="logo-container">
+      <div class="logo">
+        <div class="logo-inner">
+          <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+            <path d="M2 2l7.586 7.586"></path>
+            <circle cx="11" cy="11" r="2"></circle>
+            <line x1="3" y1="22" x2="21" y2="22" stroke-width="3"></line>
+          </svg>
+        </div>
+      </div>
+      <div class="logo-text">SBC</div>
+    </div>
+    <h1 class="animate__animated animate__fadeInDown">Login</h1>
+    <input type="text" id="username" placeholder="Username" required class="animate__animated animate__fadeIn">
+    <input type="password" id="password" placeholder="Password" required class="animate__animated animate__fadeIn">
+    <i class="password-toggle-icon" onclick="togglePassword('password')">👁️</i>
+    <div id="loginError" class="error"></div>
+    <div class="button-group">
+      <button onclick="login()" class="animate__animated animate__fadeInUp ripple">Login</button>
+      <button onclick="showWelcome()" class="animate__animated animate__fadeInUp ripple">Back</button>
+    </div>
+    
+    <!-- Change Password Section -->
+    <div class="change-password-section" id="userChangePasswordSection">
+      <h3>Change Password</h3>
+      <input type="password" id="currentUserPassword" placeholder="Current Password">
+      <input type="password" id="newUserPassword" placeholder="New Password (min 6 characters)">
+      <input type="password" id="confirmUserPassword" placeholder="Confirm New Password">
+      <div id="userPasswordError" class="error"></div>
+      <div class="button-group">
+        <button onclick="changeUserPassword()" class="change-password-btn ripple">Change Password</button>
+      </div>
+    </div>
+    <div class="button-group">
+      <button onclick="toggleChangePassword('userChangePasswordSection')" class="change-password-btn ripple">Change Password</button>
+    </div>
+  </div>
+  
+  <!-- Main Content: Stationery Bill Calculator -->
+  <div id="mainContent" class="container" style="display: none;">
+    <div class="logo-container">
+      <div class="logo">
+        <div class="logo-inner">
+          <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+            <path d="M2 2l7.586 7.586"></path>
+            <circle cx="11" cy="11" r="2"></circle>
+            <line x1="3" y1="22" x2="21" y2="22" stroke-width="3"></line>
+          </svg>
+        </div>
+      </div>
+      <div class="logo-text">SBC</div>
+    </div>
+    <h1 class="animate__animated animate__fadeInDown">Stationery Bill Calculator</h1>
+    <div id="noItemsMessage" style="display: none; color: var(--danger);" class="animate__animated animate__shakeX">
+      No items available. Please contact admin to add items.
+    </div>
+    <table id="itemsTable" style="display: none;" class="animate__animated animate__fadeIn">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Price (₹)</th>
+          <th>Available Quantity</th>
+          <th>Quantity to Buy</th>
+        </tr>
+      </thead>
+      <tbody id="itemTable"></tbody>
+    </table>
+    <div class="button-group">
+      <button onclick="generateBill()" class="animate__animated animate__fadeInUp pulse-animation ripple">Generate Bill</button>
+      <button onclick="resetValues()" class="animate__animated animate__fadeInUp ripple">Reset</button>
+      <button onclick="viewHistory()" class="animate__animated animate__fadeInUp ripple">View History</button>
+      <button onclick="clearHistory()" class="animate__animated animate__fadeInUp ripple">Clear History</button>
+      <button onclick="logout()" class="animate__animated animate__fadeInUp ripple">Logout</button>
+    </div>
+    <div id="billDisplay">
+      <h2>Bill Summary</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Amount (₹)</th>
+          </tr>
+        </thead>
+        <tbody id="billContent"></tbody>
+      </table>
+      <h2>Grand Total: ₹<span id="grandTotal">0</span></h2>
+    </div>
+    
+    <div id="historyDisplay">
+      <h2>Calculation History</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Bill</th>
+            <th>Grand Total (₹)</th>
+          </tr>
+        </thead>
+        <tbody id="historyContent"></tbody>
+      </table>
+      <div class="button-group">
+        <button onclick="hideHistory()" class="ripple">Close History</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Registration Page -->
+  <div id="adminRegistration" class="container" style="display: none;">
+    <div class="logo-container">
+      <div class="logo">
+        <div class="logo-inner">
+          <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+            <path d="M2 2l7.586 7.586"></path>
+            <circle cx="11" cy="11" r="2"></circle>
+            <line x1="3" y1="22" x2="21" y2="22" stroke-width="3"></line>
+          </svg>
+        </div>
+      </div>
+      <div class="logo-text">SBC</div>
+    </div>
+    <h1 class="animate__animated animate__fadeInDown">Admin Registration</h1>
+    <input type="text" id="adminRegUsername" placeholder="Create Admin Username" required class="animate__animated animate__fadeIn">
+    <input type="password" id="adminRegPassword" placeholder="Create Admin Password (min 6 characters)" required class="animate__animated animate__fadeIn">
+    <i class="password-toggle-icon" onclick="togglePassword('adminRegPassword')">👁️</i>
+    <div id="adminRegError" class="error"></div>
+    <div class="button-group">
+      <button onclick="adminRegister()" class="animate__animated animate__fadeInUp ripple">Register</button>
+      <button onclick="showWelcome()" class="animate__animated animate__fadeInUp ripple">Back</button>
+    </div>
+  </div>
+
+  <!-- Admin Login Page -->
+  <div id="adminLogin" class="container" style="display: none;">
+    <div class="logo-container">
+      <div class="logo">
+        <div class="logo-inner">
+          <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+            <path d="M2 2l7.586 7.586"></path>
+            <circle cx="11" cy="11" r="2"></circle>
+            <line x1="3" y1="22" x2="21" y2="22" stroke-width="3"></line>
+          </svg>
+        </div>
+      </div>
+      <div class="logo-text">SBC</div>
+    </div>
+    <h1 class="animate__animated animate__fadeInDown">Admin Login</h1>
+    <input type="text" id="adminUsername" placeholder="Admin Username" required class="animate__animated animate__fadeIn">
+    <input type="password" id="adminPassword" placeholder="Admin Password" required class="animate__animated animate__fadeIn">
+    <i class="password-toggle-icon" onclick="togglePassword('adminPassword')">👁️</i>
+    <div id="adminLoginError" class="error"></div>
+    <div class="button-group">
+      <button onclick="adminLogin()" class="animate__animated animate__fadeInUp ripple">Login</button>
+      <button onclick="showWelcome()" class="animate__animated animate__fadeInUp ripple">Back</button>
+    </div>
+    
+    <!-- Change Password Section -->
+    <div class="change-password-section" id="adminChangePasswordSection">
+      <h3>Change Password</h3>
+      <input type="password" id="currentAdminPassword" placeholder="Current Password">
+      <input type="password" id="newAdminPassword" placeholder="New Password (min 6 characters)">
+      <input type="password" id="confirmAdminPassword" placeholder="Confirm New Password">
+      <div id="adminPasswordError" class="error"></div>
+      <div class="button-group">
+        <button onclick="changeAdminPassword()" class="change-password-btn ripple">Change Password</button>
+      </div>
+    </div>
+    <div class="button-group">
+      <button onclick="toggleChangePassword('adminChangePasswordSection')" class="change-password-btn ripple">Change Password</button>
+    </div>
+  </div>
+
+  <!-- Item Management Page -->
+  <div id="itemManagement" class="container" style="display: none;">
+    <div class="logo-container">
+      <div class="logo">
+        <div class="logo-inner">
+          <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+            <path d="M2 2l7.586 7.586"></path>
+            <circle cx="11" cy="11" r="2"></circle>
+            <line x1="3" y1="22" x2="21" y2="22" stroke-width="3"></line>
+          </svg>
+        </div>
+      </div>
+      <div class="logo-text">SBC</div>
+    </div>
+    <h1 class="animate__animated animate__fadeInDown">Admin Dashboard</h1>
+    <h2 class="animate__animated animate__fadeIn">Add New Item</h2>
+    <input type="text" id="itemName" placeholder="Item Name" required class="animate__animated animate__fadeIn">
+    <input type="number" id="itemPrice" placeholder="Item Price (₹)" min="0" step="0.01" required class="animate__animated animate__fadeIn">
+    <input type="number" id="itemQuantity" placeholder="Item Quantity" min="0" required class="animate__animated animate__fadeIn">
+    <div id="itemError" class="error"></div>
+    <div class="button-group">
+      <button onclick="addItem()" class="animate__animated animate__fadeInUp ripple">Add Item</button>
+    </div>
+    
+    <h2 class="animate__animated animate__fadeIn">Existing Items</h2>
+    <div id="existingItems" class="animate__animated animate__fadeIn"></div>
+    
+    <!-- User Management Section -->
+    <div class="section animate__animated animate__fadeIn">
+      <h2>User Management</h2>
+      <button class="toggle-btn animate__animated animate__fadeIn ripple" onclick="toggleUserDetails()">Show User Details</button>
+      <div id="userDetails" style="display: none;">
+        <h3>Registered Users</h3>
+        <table class="user-table">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="userTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+    
+    <!-- Admin History Section -->
+    <div class="section animate__animated animate__fadeIn">
+      <h2>Bill History Management</h2>
+      <button class="toggle-btn animate__animated animate__fadeIn ripple" onclick="toggleAdminHistory()">Show All Bill History</button>
+      <div id="adminHistory" style="display: none;">
+        <h3>All User Bill History</h3>
+        <table class="user-table">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Date</th>
+              <th>Total (₹)</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="adminHistoryTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+    
+    <div class="button-group">
+      <button onclick="removeSelectedItems()" class="animate__animated animate__fadeInUp ripple">Remove Selected Items</button>
+      <button onclick="updateExistingItems()" class="animate__animated animate__fadeInUp ripple">Update Selected Items</button>
+      <button onclick="adminLogout()" class="animate__animated animate__fadeInUp ripple">Logout</button>
+    </div>
+    
+    <div id="adminHistoryDisplay">
+      <h2>Bill Details</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Quantity</th>
+            <th>Amount (₹)</th>
+          </tr>
+        </thead>
+        <tbody id="adminHistoryContent"></tbody>
+      </table>
+      <h2>Grand Total: ₹<span id="adminGrandTotal">0</span></h2>
+      <div class="button-group">
+        <button onclick="hideAdminHistory()" class="ripple">Close Bill Details</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
